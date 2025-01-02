@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Link to CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+    <header class="dashboard-header">
+        <div class="container">
+            <h1>Welcome to Your Dashboard</h1>
+            <p>Hello, <strong>{{ email }}</strong>! We're glad to have you here.</p>
+        </div>
+    </header>
+
+    <main class="dashboard-main">
+        <div class="container">
+            <section class="dashboard-section">
+                <h2>Quick Actions</h2>
+                <div class="actions">
+                    <a href="/summerize" class="action-card">
+                        <h3>Summarize Content</h3>
+                        <p>Quickly summarize web pages or articles.</p>
+                    </a>
+                    <a href="/contact" class="action-card">
+                        <h3>Contact Us</h3>
+                        <p>Get in touch with our support team.</p>
+                    </a>
+                    <a href="/donation" class="action-card">
+                        <h3>Make a Donation</h3>
+                        <p>Support us with a generous contribution.</p>
+                    </a>
+                </div>
+            </section>
+
+            <section class="dashboard-section">
+                <h2>Your Profile</h2>
+                <p>Email: <strong>{{ email }}</strong></p>
+                <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+
+            </section>
+        </div>
+    </main>
+
+    <footer class="dashboard-footer">
+        <div class="container">
+            <p>&copy; 2024 Web Summarizer. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

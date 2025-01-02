@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Page Summarizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style src="styles.css"></style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+<body>
+<div id="wrapper">
+    <div class="container1st">
+        <nav>
+            <img src="/static/Images/Logo.png" class="logo">
+            <ul>
+                <li><a href="#"> Home </a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact Us</a></li>
+                <li><a href="{{ url_for('cracc') }}">Sign/Log in</a></li>
+            </ul>
+            <a href="{{ url_for('donation') }}">
+                <button class="btn">
+                  <img src="/static/Images/icon 1.png" alt="Donation Icon"> Donation
+                </button>
+              </a>
+                           
+        </nav>
+
+        <div class="content">
+            <h1> Summerize ! <br> Boring Web Pages</h1>
+            <p>
+                This website summerizes complex and boring data to small and fun to read paragraphs you can add links of
+                that pages also just make sure the link is not pirated !
+            </p>
+        </div>
+<!---------------------------------------------- this is main content do not touch --------------------------------------->
+<div class="container">
+        <h1>Web Page Summarizer</h1>
+        <p>Paste a URL below and choose your options to generate a summary:</p>
+        
+        <form id="summarizer-form" onsubmit="return false;">
+            <input type="text" id="url-input" placeholder="Enter URL" required>
+            <br>
+            
+            <label for="length-selector">Summary Length:</label><br>
+            <select id="length-selector">
+                <option value="short">Short</option>
+                <option value="medium">Medium</option>
+                <option value="long">Long</option>
+            </select>
+            <br>
+
+            <label for="format-selector">Summary Format:</label><br>
+            <select id="format-selector">
+                <option value="paragraph">Paragraph</option>
+                <option value="bullet">Bullet Points</option>
+            </select>
+            <br>
+
+            <button type="submit" id="summarize-button" onclick="summarizePage()">Summarize</button>
+            <button type="button" id="clear-button" onclick="clearForm()">Clear</button>
+        </form>
+
+        <p class="error-message" id="error-message">Please enter a valid URL.</p>
+        <div class="loading" id="loading-spinner">
+            <p>Summarizing... Please wait.</p>
+        </div>
+
+        <div class="summary-result" id="summary-result">
+            <h2>Summary:</h2>
+            <div id="summary-text"></div>
+        </div>
+    </div>
+</div>
+    <script>
+        function isValidURL(url) {
+            const regex = /^(http|https):\/\/[^ "]+$/;
+            return regex.test(url);
+        }
+
+        function clearForm() {
+            document.getElementById('url-input').value = '';
+            document.getElementById('length-selector').value = 'medium';
+            document.getElementById('format-selector').value = 'paragraph';
+            document.getElementById('error-message').style.display = 'none';
+            document.getElementById('summary-result').style.display = 'none';
+        }
+
+        async function summarizePage() {
+    const urlInput = document.getElementById('url-input').value.trim();
+    const summaryLength = document.getElementById('length-selector').value;
+    const summaryFormat = document.getElementById('format-selector').value;
+
+    const errorMessage = document.getElementById('error-message');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const summaryResult = document.getElementById('summary-result');
+    const summaryText = document.getElementById('summary-text');
+
+    // Reset UI states
+    errorMessage.style.display = 'none';
+    summaryResult.style.display = 'none';
+    summaryText.textContent = '';
+    errorMessage.textContent = '';
+
+    if (!isValidURL(urlInput)) {
+        errorMessage.textContent = "Please enter a valid URL.";
+        errorMessage.style.display = 'block';
+        return;
+    }
+
+    loadingSpinner.style.display = 'block';
+
+    try {
+        const response = await fetch('/summarize', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                url: urlInput,
+                length: summaryLength,
+                format: summaryFormat
+            }),
+        });
+
+        const result = await response.json();
+        loadingSpinner.style.display = 'none';
+
+        if (response.ok) {
+            // Display the summary with proper formatting
+            summaryText.innerHTML = result.summary; // Directly insert HTML for bullets or paragraph
+            summaryResult.style.display = 'block';
+        } else {
+            errorMessage.textContent = result.error || "Failed to generate summary.";
+            errorMessage.style.display = 'block';
+        }
+    } catch (error) {
+        loadingSpinner.style.display = 'none';
+        errorMessage.textContent = "An unexpected error occurred. Please try again later.";
+        errorMessage.style.display = 'block';
+    }
+}
+
+/**
+ * Validate if the input is a valid URL.
+ * @param {string} url - The URL to validate.
+ * @returns {boolean} - True if valid, false otherwise.
+ */
+function isValidURL(url) {
+    try {
+        new URL(url);
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+    </script>
+ 
+<!---------------------------------------------- this is main content do not touch --------------------------------------->
+
+<div class="one">
+    <div>
+        <img src="/static/Images/one.webp" alt="">
+    </div>
+    <div>
+        <h1>Single platform, endless summaries</h1>
+        <h3> Transforming information overload into manageable insights — consistently striving for clarity. </h3>
+        <p>
+        <h4>Condense & Comprehend: Summarization Simplified </h4>
+        100% Automatic Article Summarization with just a click
+        In the sheer amount of information that bombards Internet users from all sides, hardly anyone wants to
+        devote
+        their valuable time to reading long texts. TLDR This's clever AI analyzes any piece of text and summarizes
+        it
+        automatically, in a way that makes it easy for you to read, understand and act on.
+        </p>
+    </div>
+</div>
+<div class="two">
+    <div>
+        <h3>Essentials Unveiled: Metadata Extraction Simplified</h3>
+        <h1>Article Metadata Extraction</h1>
+        <p>This is the online article summarizer tool, not only condenses lengthy articles into shorter,
+            digestible
+            content, but it also automatically extracts essential metadata such as author and date information,
+            related
+            images, and the title. Additionally, it estimates the reading time for news articles and blog posts,
+            ensuring you have all the necessary information consolidated in one place for efficient reading. <br>
+
+            1. Automated author-date extraction <br>
+            2. Related images consolidation <br>
+            3. Instant reading time estimation</p>
+    </div>
+    <div>
+        <img src="/static/Images/two.webp" alt="">
+    </div>
+</div>
+<div class="three">
+    <div>
+        <img src="/static/Images/three.webp" alt="">
+    </div>
+    <div>
+        <h3>Dodge the Distraction, Embrace the Essence</h3>
+        <h1>Avoid the Clickbait Trap</h1>
+        <p>
+            Our Website smartly selects the most relevant points from a text, filtering out weak arguments and
+            baseless
+            speculation. It allows for quick comprehension of the essence, without needing to sift through all
+            paragraphs. By focusing on core substance and disregarding fluff, it enhances efficiency in consuming
+            information, freeing more time for valuable content. <br>
+
+            1. Filters weak arguments and speculation <br>
+            2. Highlights most relevant points <br>
+            3. Saves time by eliminating fluff
+        </p>
+    </div>
+</div>
+
+ <!---------------------------------------------------- whos gonna use section ------------------------------------->
+
+ <div class="template-container">
+    <h1>Who is Web Summarizer for?</h1>
+    <p>This is a summarizing tool designed for students, writers, teachers, institutions, journalists, and any
+        internet user who needs to quickly understand the essence of lengthy content.</p>
+    <div class="template-grid">
+        <div class="template-card">
+            <img src="/static/Images/internet.svg" alt="Internet Icon">
+            <h3>Anyone with access to the Internet</h3>
+            <p>Web Summerizer is for anyone who just needs to get the gist of a long article. You can read this
+                summary, then go read the original article if you want to.</p>
+        </div>
+        <div class="template-card">
+            <img src="/static/Images/students.svg" alt="Student Icon">
+            <h3>Students</h3>
+            <p>This is for students studying for exams, who are overwhelmed by information overload. This tool will
+                help them summarize information into a concise, easy-to-digest piece of text.</p>
+        </div>
+        <div class="template-card">
+            <img src="/static/Images/writer.svg" alt="Writers Icon">
+            <h3>Writers</h3>
+            <p>This is for anyone who writes frequently, and wants to quickly summarize their articles for easier
+                writing and easier reading.</p>
+        </div>
+        <div class="template-card">
+            <img src="/static/Images/teacher.svg" alt="Teachers Icon">
+            <h3>Teachers</h3>
+            <p>This is for teachers who want to summarize a long document or chapter for their students.</p>
+        </div>
+        <div class="template-card">
+            <img src="/static/Images/instituition.svg" alt="Institutions Icon">
+            <h3>Institutions</h3>
+            <p>This is for corporations and institutions who want to condense a piece of content into a summary that
+                is easy to digest for their employees/students.</p>
+        </div>
+        <div class="template-card">
+            <img src="/static/Images/newspaper.svg" alt="Journalists Icon">
+            <h3>Journalists</h3>
+            <p>This is for journalists who need to summarize a long article for their newspaper or magazine.</p>
+        </div>
+    </div>
+</div>
+
+<!-- ---------------------------------- about setion ------------------------------------------------------ -->
+<section id="about" class="sec-01">
+    <div class="contr">
+        <h2 class="main-title">About Us !</h2>
+        <div class="cntent">
+            <div class="abimg">
+                <img src="/static/Images/about us.jpg" alt="">
+            </div>
+            <div class="abtbx">
+                <h3>Web Summerizer</h3>
+                <p>
+                    We are a team of MCA students from MET Bhujbal Knowledge City College, committed to making web
+                    content easier to understand. Our web summarizer tool extracts the key points from lengthy
+                    articles, turning them into concise, easy-to-read summaries. We aim to help users save time,
+                    stay informed, and focus on what truly matters.
+                </p>
+            </div>
+        </div>
+        <div class="media-icn">
+            <a href="#" class="scicn"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="scicn"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="scicn"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="scicn"><i class="fab fa-google"></i></a>
+        </div>
+    </div>
+</section>
+
+<section class="sec-02">
+    <div class="contr">
+        <h3 class="sectlt">How It Works ?</h3>
+        <div class="cntent">
+            <div class="abimg">
+                <img src="/static/Images/howitwork.jpg" alt="">
+            </div>
+            <div class="info">
+                <h4 class="info-title">Description :</h4>
+                <p>
+                    Our web summarizer simplifies lengthy articles into clear, concise summaries, making it easier
+                    for users to grasp key information quickly. Designed for students, professionals, and anyone
+                    with a busy schedule, it helps save time, enhances productivity, and ensures you stay informed
+                    without the hassle.
+                    1. Input URL or Text: Enter the URL of the article you want to summarize, or paste the text
+                    directly into the input box. <br>
+                    2. AI Analysis: Our intelligent algorithm scans the content, identifying key points and relevant
+                    information. <br>
+                    3. Generate Summary: In just a few seconds, the tool generates a concise, easy-to-read summary,
+                    highlighting the main ideas. <br>
+                    4. Review and Share: Read the summary, save it for later, or share it directly with others for
+                    quick access to essential information.<br> Summerize It !
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="sec-03">
+    <div class="contr">
+        <h3 class="sectlt">Follow Us</h3>
+        <div class="cntent">
+            <div class="media-info">
+                <li><a href="https://www.facebook.com/login/"><i class="fab fa-facebook"></i> facebook</a></li>
+                <li><a href="https://www.instagram.com/login"><i class="fab fa-instagram"></i> Instagram</a></li>
+                <li><a href="https://x.com/i/flow/login"><i class="fab fa-twitter"></i> Twitter</a></li>
+                <li><a href="https://www.google.com/"><i class="fab fa-google"></i></a> Google</li>
+                <li><a href="https://in.linkedin.com/?original_referer=https%3A%2F%2Fwww.google.com%2F"><i class="fab fa-linkedin"></i></a> Linkedin</li>
+            </div>
+            <div class="abimg">
+                <img src="/static/Images/followus.jpg" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    ScrollReveal({
+        // reset: true,
+        distance: '60px',
+        duration: 2500,
+        delay: 400
+    });
+
+    ScrollReveal().reveal('.main-title, .sectlt, .one, .three', { delay: 500, origin: 'left' });
+    ScrollReveal().reveal('.sec-01 .abimg, .info', { delay: 500, origin: 'bottom' });
+    ScrollReveal().reveal('.abtbx, .two', { delay: 700, origin: 'right' });
+    ScrollReveal().reveal('.media-icn', { delay: 500, origin: 'bottom', interval: 200 });
+    ScrollReveal().reveal('.sec-02 .abimg, .sec-03 .abimg', { delay: 500, origin: 'top' });
+    ScrollReveal().reveal('.media-info li', { delay: 500, origin: 'left', interval: 200 });
+</script>
+
+<!-- -------------------------------------------------------------------------------------------------------------------------- -->
+<footer>
+    <div class="footer-container">
+        <div class="footer-logo">
+            <a href="#">
+                <img src="/static/Images/Logo.png" alt="Website Logo">
+              </a>
+              
+        </div>
+        <div class="footer-links">
+            <ul>
+                <li><a href="{{ url_for('contact') }}"><img src="/static/Images/contact.png" alt="">Contact Us</a></li>
+                <li><a href="mailto:youremail@example.com"><img src="/static/Images/mail.svg" alt="Email"> Email Us</a></li>
+                <li><a href="https://www.instagram.com/yourprofile" target="_blank"><img src="/static/Images/instagram.png"
+                            alt="Instagram"> Instagram</a></li>
+                <li><a href="#about"><img src="/static/Images/About.png" alt="">About Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-donation">
+            <button class="btn"><img src="/static/Images/icon 1.png">Donation</button>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Web Summerize. All Rights Reserved To Manish Bhavar.</p>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Summerizer</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='cracc.css') }}">
+    <style src="cracc.css"></style>
+</head>
+
+<body>
+    <div class="hero">
+        <div class="formbox">
+            <div class="btnbx">
+                <div id="btn"></div>
+                <button type="button" class="togglebtn" onclick="login()">Log In</button>
+                <button type="button" class="togglebtn" onclick="register()">Register</button>
+            </div>
+            <div class="social">
+                <img src="/Web Summarizer/static/Images/instagram.png" alt="">
+                <img src="/Web Summarizer/static/Images/mail.svg" alt="">
+                <img src="/Web Summarizer/static/Images/google.png" alt="">
+            </div>
+            <form id="login" class="input" method="POST" action="/login">
+                <input type="email" name="email" class="infield" placeholder="Email Id" required>
+                <input type="password" name="password" class="infield" placeholder="Enter Password" required>
+                <input type="checkbox" class="checkbox"><span>Remember Password</span>
+                <button type="submit" class="loginbtn">Log In</button>
+            </form>
+            
+            <form id="register" class="input" method="POST" action="/register">
+                <input type="email" name="email" class="infield" placeholder="Email Id" required>
+                <input type="password" name="password" class="infield" placeholder="Enter Password" required>
+                <input type="password" name="confirm_password" class="infield" placeholder="Confirm Password" required>
+                <input type="checkbox" class="checkbox" required>
+                <span>I Agree To The Terms and Conditions</span>
+                <button type="submit" class="loginbtn">Register</button>
+            </form>
+            
+        </div>
+    </div>
+
+    <script>
+        var x = document.getElementById("login");
+        var y = document.getElementById("register");
+        var z = document.getElementById("btn");
+
+        function register(){
+            x.style.left = "-500px"
+            y.style.left = "100px"
+            z.style.left = "110px"
+        }
+        function login(){
+            x.style.left = "100px"
+            y.style.left = "550px"
+            z.style.left = "0"
+        }
+
+    </script>
+
+
+
+</body>
+
+</html>

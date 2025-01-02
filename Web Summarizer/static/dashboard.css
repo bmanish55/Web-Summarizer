@@ -1,0 +1,124 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #faf8f8;
+    background-image: linear-gradient(rgba(11, 5, 63, 0.65), rgba(54, 57, 112, 0.65)), url('/static/Images/bg\ 1.jpg');
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+/* Header styles */
+.dashboard-header {
+    background-color: transparent;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.dashboard-header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.dashboard-header p {
+    margin: 5px 0 0;
+    font-size: 1.2rem;
+}
+
+/* Main content styles */
+.dashboard-main {
+    padding: 20px 0;
+}
+
+.dashboard-section {
+    margin-bottom: 30px;
+}
+
+.dashboard-section h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.actions {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.action-card {
+    flex: 1 1 calc(31.323% - 20px);
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    padding: 20px;
+    text-decoration: none;
+    color: #333;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.action-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.action-card p {
+    font-size: 1rem;
+}
+
+.action-card:hover {
+    transform: scale(1.05); /* Slightly zooms the card */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Adds a more pronounced shadow */
+}
+
+
+/* Button styles */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #45a049;
+}
+
+/* Footer styles */
+.dashboard-footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 30px;
+    font-size: 0.9rem;
+}
+
+.dashboard-footer p {
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .actions {
+        flex-direction: column;
+    }
+
+    .action-card {
+        flex: 1 1 100%;
+    }
+}
